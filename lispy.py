@@ -1,7 +1,28 @@
 
 def tokenize(chars):
     "Convert a string of characters into a list of tokens."
-    return chars.replace('(', ' ( ').replace(')', ' ) ').split()
+    tokens = []
+    stack = []
+    list_c = -1
+    for c in chars:
+        print stack 
+        if c == '(' and len(stack) ==1 and tokens:
+            tokens.append([''])
+            list_c = len(tokens) - 1
+        elif c == '(':
+            tokens.append([''])
+            list_c += 1
+            stack.append(c)
+        elif c == ')' and stack:
+            stack.pop()
+            list_c -= 1
+        else:
+            tokens[list_c].append(c)
+    return [''.join(l) for l in tokens]    
+#"(begin (define r 10) (* pi (* r r)))"
+#"(begin('cory(is)))('here')"          
+            
+
 
 Symbol = str          # A Scheme Symbol is implemented as a Python str
 List   = list         # A Scheme List is implemented as a Python list
@@ -40,5 +61,5 @@ def atom(token):
 
 
 ls = "(begin (define r 10) (* pi (* r r)))"
-
-print parse(ls)
+print tokenize(ls)
+#print parse(ls)
